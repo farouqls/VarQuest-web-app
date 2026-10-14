@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+  head
+    title= title
+    link(rel="stylesheet", href="/style.css")
+  body
+    .results-screen
+      .results-card
+        p.session-label ● SESSION COMPLETE ● PYTHON DATA TYPES
+        .score-circle
+          p.score-pct #{Math.round(score / total * 100)}%
+          p.score-label SCORE
+        h2.score-text
+          | You scored 
+          span.score-highlight= score
+          |  out of #{total}
+        p.feedback= getFeedback(score)
+        .score-summary
+          .summary-item
+            p.summary-label COMPLETED
+            p.summary-value #{score} / #{total}
+          .summary-item
+            p.summary-label EVALUATION
+            p.summary-value= getRating(score)
+        a.btn-primary(href="/game/start") ↺ Play Again

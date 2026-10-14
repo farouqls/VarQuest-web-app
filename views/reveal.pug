@@ -1,0 +1,34 @@
+doctype html
+html(lang="en")
+  head
+    title= title
+    link(rel="stylesheet", href="/style.css")
+  body
+    .game-screen
+      .game-header
+        span.progress Question #{round} of #{total}
+        span.progress-pct #{Math.round(round / total * 100)}% Complete
+      .progress-bar
+        .progress-fill(style=`width: ${Math.round(round / total * 100)}%`)
+      .question-card
+        p.card-label PROMPT
+        .code-block
+          code= question.expression_text
+        .answer-reveal
+          if isCorrect
+            p.result-correct ✅ Correct! You picked
+              span.type-badge= playerAnswer
+          else
+            p.result-wrong ❌ Incorrect. You picked
+              span.type-badge.wrong= playerAnswer
+              |  — Correct answer is
+              span.type-badge= question.correct_type
+          p.explanation= getExplanation(question.correct_type)
+      form(action=`/game/${round}/next`, method="POST")
+        input(type="hidden", name="sessionId", value=sessionId)
+        input(type="hidden", name="questionIds", value=questionIds)
+        button.btn-primary(type="submit")
+          if round < 10
+            | Next Question →
+          else
+            | See Results →

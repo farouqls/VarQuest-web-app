@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+  head
+    title= title
+    link(rel="stylesheet", href="/style.css")
+  body
+    .game-screen
+      .game-header
+        span.progress Question #{round} of #{total}
+        span.progress-pct #{Math.round((round - 1) / total * 100)}% Complete
+      .progress-bar
+        .progress-fill(style=`width: ${Math.round((round - 1) / total * 100)}%`)
+      .question-card
+        p.card-label PROMPT
+        .code-block
+          code= question.expression_text
+        p.hint Pick the type card that matches this expression, then click Reveal.
+      p.select-label SELECT YOUR CARD ANSWER
+      .type-buttons
+        each type in types
+          form(action=`/game/${round}/reveal`, method="POST")
+            input(type="hidden", name="sessionId", value=sessionId)
+            input(type="hidden", name="questionIds", value=questionIds)
+            button.type-btn(type="submit", name="playerAnswer", value=type)= type
